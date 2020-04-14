@@ -1,0 +1,77 @@
+<!-- userInfo.result[0] userProb.result-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Codeforces Profile</title>
+</head>
+<body style="background-color: lightgray;">
+    <%var ac_sub=new Map();%>
+        <%var wrg_sub=new Map();%>
+        <h1 align="center">User's Submission</h1>
+            <% userProb.result.forEach(function(Submission){%>
+                <%  var date=new Date(Submission.creationTimeSeconds*1000);
+                    var obj={
+                        Name:Submission.problem.name,
+                        Rating:Submission.problem.rating,
+                        Sub_Date:date
+                    }
+                if(Submission.verdict==="OK"){
+                    ac_sub.set(Submission.problem.name,obj);    
+                }else{
+                    wrg_sub.set(Submission.problem.name,obj);
+                }%>
+            <% }) %>
+    <% var t_date=new Date();%>
+
+    <div style="margin: 30px;padding: 30px; background-color: lightpink;">
+        <div style="background-color: bisque;text-align: center;margin: 10px;border: black solid 2px;display: flex;flex-direction: row;">
+            <div style="width:50%">
+                <h1> Profile : <%= userInfo.result[0].handle %> </h1>
+                <div>Name : <strong> <%= userInfo.result[0].firstName+" "+userInfo.result[0].lastName%> </strong></div>
+                <div>Rating : <strong> <%= userInfo.result[0].rating %> </strong></div>
+                <div>Max Rating : <strong> <%= userInfo.result[0].maxRating%> </strong></div>
+                <div>Title : <strong> <%= userInfo.result[0].rank%> </strong></div>
+                <div>Organization : <strong> <%= userInfo.result[0].organization%> </strong></div>
+                <div>Solved Questions : <strong> <%=ac_sub.size%> </strong></div>
+            </div>
+            <div style="align-content: flex-end;width: 50%;padding: 5px;">
+                <img style="border: solid black 1px; " src=<%= userInfo.result[0].titlePhoto%> >
+            </div>
+        </div>
+
+        <h2>Accepted Solutions</h2>
+        <div style="background-color: lightgreen;border: black solid 2px;margin:10px"> 
+            <%ac_sub.forEach((value,key)=>{%>
+                <% if((value.Sub_Date.getFullYear()===t_date.getFullYear())&&(value.Sub_Date.getMonth()===t_date.getMonth())&&(value.Sub_Date.getDate()===t_date.getDate())){%>
+                <div style="background-color: white; border:black solid 1px ;">
+                    <strong><%=key%></strong> : <%=value.Rating%> &emsp;---> todays Submission at <%= value.Sub_Date %>
+                </div>
+                <%}else{%>
+                    <div style="border: black solid 1px ;">
+                        <strong><%=key%></strong> : <%=value.Rating%> &emsp;( <%=value.Sub_Date.getDate()%>/<%=value.Sub_Date.getMonth()+1%>/<%=value.Sub_Date.getFullYear()%>)
+                    </div>
+                <%}%>
+            <%})%> 
+        </div>
+        <h2>Attempted Solutions</h2>
+        <div style="background-color: lightsalmon;border: black solid 2px ;margin:10px">
+            <%wrg_sub.forEach((value,key)=>{%>
+                <%if(!ac_sub.has(key)){%>
+                    <%  if(value.Sub_Date.getFullYear()===t_date.getFullYear()&&value.Sub_Date.getMonth()===t_date.getMonth()&&value.Sub_Date.getDate()===t_date.getDate()){%>
+                        <div style="background-color: white;border: black solid 1px ;">
+                            <strong><%=key%></strong> : <%=value.Rating%> &emsp; ---> todays Submission at <%=value.Sub_Date%>
+                        </div>
+                        <%}else{%>
+                            <div style=" border:black solid 1px ;">
+                                <strong><%=key%></strong> : <%=value.Rating%> &emsp;( <%=value.Sub_Date.getDate()%>/<%=value.Sub_Date.getMonth()%>/<%=value.Sub_Date.getFullYear()%>)
+                            </div>
+                        <%}%>
+                <%}%>
+            <%})%> 
+        </div>
+        </div>    
+</body>
+</html>

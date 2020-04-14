@@ -1,0 +1,16 @@
+{
+  "name": "programmerslegacy",
+  "version": "1.0.0",
+  "description": "a website where a programmer can assess his/her coding performance",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abhijeet Kumar Jha",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "request": "^2.88.0"
+  }
+}
